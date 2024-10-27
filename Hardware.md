@@ -1,13 +1,8 @@
 # Hardware
 
-## Schematic
-![schematic](images/MHI-AC-Ctrl_Schematic.png)
 
-## PCB (KiCad)
-<img src="images/PCB_top.PNG" width=450/>
-<img src="images/PCB_bottom.PNG" width=450/>
+You find the KiCad schematic and the layout in the [kicad folder](kicad). I used this KiCad project for the PCB order at JLCPCB.
 
-You find the KiCad schematic and the layout in the [kicad folder](kicad). I used this KiCad project for the PCB order at [Aisler](https://aisler.net).
 
 
 ## Bill of Material
@@ -22,8 +17,6 @@ R1   | 12K        |                      | Optional <sup>2</sup>
 
 
 <sup>1</sup>According to the discussions [here](https://github.com/absalom-muc/MHI-AC-Ctrl/issues/102) and [here](https://github.com/absalom-muc/MHI-AC-Ctrl/issues/17) TSR 1-2450 can be replaced by TSR 1-2450E.
-
-<sup>2</sup>The documentation of AI-Thinker says this one should be connected, though the USB-Serial chip already pulls this pin.
 
 ## Assembled PCB
 The following photos show the assembled PCB
