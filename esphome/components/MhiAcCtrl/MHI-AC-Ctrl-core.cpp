@@ -11,7 +11,7 @@
 #include "driver/timer.h"
 #include "driver/spi_slave.h"
 #include "driver/gpio.h"
-
+#define LOG_LOCAL_LEVEL ESP_LOG_DEBUG
 #include "esp_log.h"
 static const char *TAG = "MHI-AC-CTRL-core";
 
@@ -663,6 +663,8 @@ static void mhi_poll_task(void *arg)
 }
 
 void mhi_ac_ctrl_core_init() {
+    esp_log_level_set(TAG,ESP_LOG_DEBUG);
+    ESP_LOGD(TAG, "This debug message");
     miso_semaphore_handle = xSemaphoreCreateMutexStatic( &miso_semaphore_buffer );
     snapshot_semaphore_handle = xSemaphoreCreateBinaryStatic( &snapshot_semaphore_buffer );
 
