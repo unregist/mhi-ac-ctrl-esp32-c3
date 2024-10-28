@@ -328,6 +328,12 @@ static void mhi_poll_task(void *arg)
         .sclk_io_num = GPIO_SCLK,
         .quadwp_io_num = -1,
         .quadhd_io_num = -1,
+		.data4_io_num = -1,
+		.data5_io_num = -1,
+		.data6_io_num = -1,
+		.data7_io_num = -1,
+		//.max_transfer_sz = 4092, // Defaults to 4092 if 0 when DMA enabled, or to SOC_SPI_MAXIMUM_BUFFER_SIZE if DMA is disabled. 
+		//.intr_flags = , // Unsure what to set to
         .flags = SPICOMMON_BUSFLAG_GPIO_PINS | SPICOMMON_BUSFLAG_SLAVE,
     };
 
@@ -337,6 +343,7 @@ static void mhi_poll_task(void *arg)
         .flags = SPI_SLAVE_BIT_LSBFIRST,
         .queue_size = 1,
         .mode = 3,                    //CPOL=1, CPHA=1
+		//.post_trans_cb = , //Unsure
     };
 
     spi_slave_transaction_t spi_slave_trans;
@@ -355,6 +362,8 @@ static void mhi_poll_task(void *arg)
         .counter_dir = TIMER_COUNT_UP,
         .auto_reload = TIMER_AUTORELOAD_DIS,
         .divider = TIMER_DIVIDER,
+		//.intr_type = , //
+		//.clk_src = ,//
     }; // default clock source is APB
     timer_init(TIMER_GROUP_0, TIMER_0, &config);
 
