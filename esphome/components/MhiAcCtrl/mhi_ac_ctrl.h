@@ -5,6 +5,9 @@
 #ifdef USE_SWITCH
 #include "esphome/components/switch/switch.h"
 #endif
+#ifdef USE_SELECT
+#include "esphome/components/select/select.h"
+#endif
 
 
 using namespace esphome;
@@ -108,20 +111,20 @@ protected:
 #ifdef USE_SELECT
 class MhiVanes : public select::Select {
 public:
-    MhiSwingMode() {
-        traits.set_options({ "Swing", "1", "2", "3", "4" });
-    }
+    //void MhiSwingMode() {
+    //    traits.set_options({ "Swing", "1", "2", "3", "4" });
+    //}
 
     virtual void control(const std::string &value) {
-        if(value == traits.get_options()[0]) {
+        if(value == "Swing") {
             mhi_ac_ctrl_core_vanes_updown_set(ACVanes::swing);
-        } else if(vanes == traits.get_options()[1]) {
+        } else if(value == "1") {
             mhi_ac_ctrl_core_vanes_updown_set(ACVanes::vanes_1);
-        } else if(vanes == traits.get_options()[2]) {
+        } else if(value == "2") {
             mhi_ac_ctrl_core_vanes_updown_set(ACVanes::vanes_2);
-        } else if(vanes == traits.get_options()[3]) {
+        } else if(value == "3") {
             mhi_ac_ctrl_core_vanes_updown_set(ACVanes::vanes_3);
-        } else if(vanes == traits.get_options()[4]) {
+        } else if(value == "4") {
             mhi_ac_ctrl_core_vanes_updown_set(ACVanes::vanes_4);
         } else {
             ESP_LOGW(TAG, "Unknown vanes mode received: %s", value.c_str());
@@ -132,24 +135,24 @@ public:
         if(mhi_ac_ctrl_core_vanes_updown_changed()) {
             switch (mhi_ac_ctrl_core_vanes_updown_get()) {
                 case ACVanes::swing:
-                    publish_state(traits.get_options()[0]);
+                    publish_state("Swing");
                     break;
                 case ACVanes::vanes_1:
-                    publish_state(traits.get_options()[1]);
+                    publish_state("1");
                     break;
                 case ACVanes::vanes_2:
-                    publish_state(traits.get_options()[2]);
+                    publish_state("2");
                     break;
                 case ACVanes::vanes_3:
-                    publish_state(traits.get_options()[3]);
+                    publish_state("3");
                     break;
                 case ACVanes::vanes_4:
-                    publish_state(traits.get_options()[4]);
+                    publish_state("4");
                     break;
             }
         }
     }
-}
+};
 #endif
 
 class MhiAcCtrl : public climate::Climate,
@@ -191,9 +194,11 @@ public:
             power_sensor_->loop();
         if(frame_errors_sensor_)
             frame_errors_sensor_->loop();
+
 #ifdef USE_SELECT
         vanes.loop();
 #endif
+
 
         if(mhi_ac_ctrl_core_target_temperature_changed()) {
             publish_self_state = true;
@@ -296,15 +301,15 @@ public:
     void dump_config() override
     {
     }
-
+/*
 #ifdef USE_SELECT
-    std::vector<Select *> get_selects() {
+    std::vector<select::Select *> get_selects() {
         return {
             &vanes,
         };
     }
 #endif
-
+*/
 protected:
     /// Transmit the state of this climate controller.
     void control(const climate::ClimateCall& call) override
@@ -396,11 +401,11 @@ protected:
         traits.set_visual_temperature_step(this->temperature_step_);
         traits.add_supported_custom_fan_mode(custom_fan_ultra_low);
         traits.set_supported_fan_modes({ CLIMATE_FAN_LOW, CLIMATE_FAN_MEDIUM, CLIMATE_FAN_HIGH, CLIMATE_FAN_AUTO });
-        //traits.set_supported_swing_modes({ CLIMATE_SWING_VERTICAL });
+        traits.set_supported_swing_modes({ CLIMATE_SWING_VERTICAL });
         return traits;
     }
 
-    const float minimum_temperature_ { 10.0f };
+    const float minimum_temperature_ { 18.0f };
     const float maximum_temperature_ { 30.0f };
     // Although the hardware accepts temperatures in steps of 0.5, it
     // effectively is per 1 degree:
@@ -437,9 +442,17 @@ public:
     void set_power_sensor(MhiPower *sensor) {
         this->power_sensor_ = sensor;
     }
-
-
 #ifdef USE_SELECT
+    void set_vanes(const std::string &value) {
+        if(mhi_ac_ctrl_core_active_mode_get()) {
+            ESP_LOGW(TAG, "Set Vanes to %s", value.c_str());
+            vanes.control(value);
+        }else{
+            ESP_LOGW(TAG, "Not setting Vanes to %s. Active Mode is Off", value.c_str());
+        }
+
+    }
+
     MhiVanes vanes;
 #endif
 };
