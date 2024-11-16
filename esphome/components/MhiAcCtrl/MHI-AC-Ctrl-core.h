@@ -5,12 +5,12 @@
 
 // # Config
 // ## pin defintions
-#define GPIO_SCLK                   GPIO_NUM_5
-#define GPIO_MOSI                   GPIO_NUM_7
-#define GPIO_MISO                   GPIO_NUM_2
-#define GPIO_CS_OUT                 GPIO_NUM_0
-#define GPIO_CS_IN                  GPIO_NUM_1
-#define GPIO_IDK                    GPIO_NUM_10
+#define GPIO_SCLK                   GPIO_NUM_21
+#define GPIO_MOSI                   GPIO_NUM_22
+#define GPIO_MISO                   GPIO_NUM_23
+#define GPIO_CS_OUT                 GPIO_NUM_25
+#define GPIO_CS_IN                  GPIO_NUM_26
+#define GPIO_IDK                    GPIO_NUM_27
 
 
 #define RCV_HOST                    SPI2_HOST
