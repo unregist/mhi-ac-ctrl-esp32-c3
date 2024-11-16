@@ -23,7 +23,7 @@ CONFIG_SCHEMA = cv.All(
                 class_=MhiActiveMode,
                 entity_category=ENTITY_CATEGORY_CONFIG,
                 icon="mdi:connection",
-            ),
+            ).extend(cv.COMPONENT_SCHEMA),
         }
     )
 )
