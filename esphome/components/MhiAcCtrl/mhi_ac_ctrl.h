@@ -288,8 +288,19 @@ public:
 
         // Check this->current_temperature is NaN so we don't have to wait for a temperature change after boot
         if(mhi_ac_ctrl_core_current_temperature_changed() || !(this->current_temperature==this->current_temperature)) {
-            publish_self_state = true;
-            this->current_temperature = mhi_ac_ctrl_core_current_temperature_get();
+            // Always submitting if current temp is NaN
+            if (!(this->current_temperature==this->current_temperature)) {
+                publish_self_state = true;
+                this->current_temperature = mhi_ac_ctrl_core_current_temperature_get();
+            }else{
+                // Only set publish_self to true if temp difference exceeds 0.25 to avoid jitter
+                float new_temp = mhi_ac_ctrl_core_current_temperature_get();
+                float temp_diff = MAX(new_temp,this->current_temperature)-MIN(new_temp,this->current_temperature);
+                if (temp_diff > 0.25){
+                    publish_self_state = true;
+                    this->current_temperature = new_temp;
+                }
+            }
         }
 
         if(this->mode != climate::CLIMATE_MODE_HEAT && this->target_temperature < 18) {
