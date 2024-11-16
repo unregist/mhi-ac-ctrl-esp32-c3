@@ -41,15 +41,15 @@ CONFIG_SCHEMA = cv.All(
                 unit_of_measurement=UNIT_WATT_HOURS,
                 device_class=DEVICE_CLASS_ENERGY,
                 state_class=STATE_CLASS_TOTAL_INCREASING,
-            ),
+            ).extend(cv.COMPONENT_SCHEMA),
             cv.Optional(CONF_POWER): sensor.sensor_schema(
                 class_=MhiPower,
                 unit_of_measurement=UNIT_WATT,
                 device_class=DEVICE_CLASS_POWER,
-            ),
+            ).extend(cv.COMPONENT_SCHEMA),
             cv.Optional(CONF_FRAME_ERRORS): sensor.sensor_schema(
                 class_=MhiFrameErrors, state_class=STATE_CLASS_TOTAL_INCREASING
-            ),
+            ).extend(cv.COMPONENT_SCHEMA),
         }
     )
 )
