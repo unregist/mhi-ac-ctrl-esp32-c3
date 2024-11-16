@@ -5,12 +5,13 @@
 
 // # Config
 // ## pin defintions
-#define GPIO_MOSI                   GPIO_NUM_17 //Should be 7  on C3, Changing to 17 for ESP32 (non-C3)
-#define GPIO_MISO                   GPIO_NUM_16 //Should be 2  on C3, Changing to 16 for ESP32 (non-C3)
-#define GPIO_SCLK                   GPIO_NUM_18 //Should be 6  on C3, Changing to 18 for ESP32 (non-C3)
-#define GPIO_CS_OUT                 GPIO_NUM_25 //Should be 9  on C3, Changing to 25 for ESP32 (non-C3)
-#define GPIO_CS_IN                  GPIO_NUM_26 //Should be 10 on C3, Changing to 26 for ESP32 (non-C3)
-#define GPIO_IDK                    GPIO_NUM_19 // This was 3  on C3, I don't know if it does anything
+#define GPIO_SCLK                   GPIO_NUM_5
+#define GPIO_MOSI                   GPIO_NUM_7
+#define GPIO_MISO                   GPIO_NUM_2
+#define GPIO_CS_OUT                 GPIO_NUM_0
+#define GPIO_CS_IN                  GPIO_NUM_1
+#define GPIO_IDK                    GPIO_NUM_10
+
 
 #define RCV_HOST                    SPI2_HOST
 
