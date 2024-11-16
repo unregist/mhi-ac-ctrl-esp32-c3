@@ -135,19 +135,22 @@ public:
         if(mhi_ac_ctrl_core_vanes_updown_changed()) {
             switch (mhi_ac_ctrl_core_vanes_updown_get()) {
                 case ACVanes::swing:
-                    publish_state("Swing");
+                    // Publish State doesn't work. Not sure why at this point
+                    // Doesn't mattter, MHI doesn't report Vane state if changed with IR remote
+                    // Storing Value in ESPhome yaml with restore_value
+                    //publish_state("Swing");
                     break;
                 case ACVanes::vanes_1:
-                    publish_state("1");
+                    //publish_state("1");
                     break;
                 case ACVanes::vanes_2:
-                    publish_state("2");
+                    //publish_state("2");
                     break;
                 case ACVanes::vanes_3:
-                    publish_state("3");
+                    //publish_state("3");
                     break;
                 case ACVanes::vanes_4:
-                    publish_state("4");
+                    //publish_state("4");
                     break;
             }
         }
@@ -445,10 +448,10 @@ public:
 #ifdef USE_SELECT
     void set_vanes(const std::string &value) {
         if(mhi_ac_ctrl_core_active_mode_get()) {
-            ESP_LOGW(TAG, "Set Vanes to %s", value.c_str());
+            ESP_LOGD(TAG, "Set Vanes to %s", value.c_str());
             vanes.control(value);
         }else{
-            ESP_LOGW(TAG, "Not setting Vanes to %s. Active Mode is Off", value.c_str());
+            ESP_LOGD(TAG, "Not setting Vanes to %s. Active Mode is Off", value.c_str());
         }
 
     }
