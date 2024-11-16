@@ -286,7 +286,8 @@ public:
             fan_old_sensor_->publish_state((uint8_t)mhi_ac_ctrl_core_fan_old_get());
         }
 
-        if(mhi_ac_ctrl_core_current_temperature_changed()) {
+        // Check this->current_temperature is NaN so we don't have to wait for a temperature change after boot
+        if(mhi_ac_ctrl_core_current_temperature_changed() || !(this->current_temperature==this->current_temperature)) {
             publish_self_state = true;
             this->current_temperature = mhi_ac_ctrl_core_current_temperature_get();
         }
