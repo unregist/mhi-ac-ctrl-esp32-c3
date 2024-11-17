@@ -5,9 +5,9 @@
 
 // # Config
 // ## pin defintions
-#define GPIO_SCLK                   GPIO_NUM_18
-#define GPIO_MOSI                   GPIO_NUM_23
-#define GPIO_MISO                   GPIO_NUM_19
+#define GPIO_SCLK                   GPIO_NUM_21
+#define GPIO_MOSI                   GPIO_NUM_22
+#define GPIO_MISO                   GPIO_NUM_23
 #define GPIO_CS_OUT                 GPIO_NUM_25
 #define GPIO_CS_IN                  GPIO_NUM_26
 #define GPIO_IDK                    GPIO_NUM_27
