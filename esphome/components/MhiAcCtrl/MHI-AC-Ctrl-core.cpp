@@ -639,7 +639,7 @@ static void mhi_poll_task(void *arg)
             mhi_fan_speed = mosi_frame[DB1] & FAN_MASK;
 
             // ********************** Diagnostics ************************
-
+/*
             ESP_LOGD(TAG, "packet: %5d    %02x %02x %02x   %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x   %02x %02x (calc %d)  rx_checksum: %d",
                     packet_cnt,
                 mosi_frame[0],  mosi_frame[1],  mosi_frame[2],  mosi_frame[3],  mosi_frame[4],  mosi_frame[5],  mosi_frame[6],  mosi_frame[7],  mosi_frame[8],  mosi_frame[9],
@@ -656,7 +656,7 @@ static void mhi_poll_task(void *arg)
                 mhi_fan_speed,
                 state
             );
-
+*/
             // ***********************************************************
 
         }
