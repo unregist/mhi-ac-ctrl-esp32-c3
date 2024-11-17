@@ -497,15 +497,8 @@ static void mhi_poll_task(void *arg)
 
         // check for errors. first byte should be 0x6c
         if ( ((mosi_frame[SB0] & 0xfe) != 0x6c) | (mosi_frame[SB1] != 0x80) | (mosi_frame[SB2] != 0x04) ) {
-            //ESP_LOGW(TAG, "packet: %5d wrong MOSI signature. 0x%02x 0x%02x 0x%02x",
-            //            packet_cnt, mosi_frame[0], mosi_frame[1], mosi_frame[2]);
-            ESP_LOGW(TAG, "packet: %5d    %02x %02x %02x   %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x   %02x %02x (calc %d)  rx_checksum: %d",
-                    packet_cnt,
-                mosi_frame[0],  mosi_frame[1],  mosi_frame[2],  mosi_frame[3],  mosi_frame[4],  mosi_frame[5],  mosi_frame[6],  mosi_frame[7],  mosi_frame[8],  mosi_frame[9],
-                mosi_frame[10], mosi_frame[11], mosi_frame[12], mosi_frame[13], mosi_frame[14], mosi_frame[15], mosi_frame[16], mosi_frame[17], mosi_frame[18], mosi_frame[19],
-                    (mosi_frame[18]<<8)+(mosi_frame[19]),
-                    rx_checksum
-                );
+            ESP_LOGW(TAG, "packet: %5d wrong MOSI signature. 0x%02x 0x%02x 0x%02x",
+                        packet_cnt, mosi_frame[0], mosi_frame[1], mosi_frame[2]);
 
 
             frame_error = true;
