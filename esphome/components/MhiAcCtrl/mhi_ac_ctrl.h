@@ -294,9 +294,17 @@ public:
             fan_old_sensor_->publish_state((uint8_t)mhi_ac_ctrl_core_fan_old_get());
         }
 
-        if(mhi_ac_ctrl_core_current_temperature_changed() || std::isnan(this->current_temperature)) {
+        if(std::isnan(this->current_temperature)) {
             this->current_temperature = mhi_ac_ctrl_core_current_temperature_get();
             publish_self_state |= !std::isnan(this->current_temperature);
+        }
+
+        if(mhi_ac_ctrl_core_current_temperature_changed()) {
+            float new_temp = mhi_ac_ctrl_core_current_temperature_get();
+            if (MAX(new_temp,this->current_temperature)-MIN(new_temp,this->current_temperature) > 0.25){
+                this->current_temperature = new_temp;
+                publish_self_state = true;
+            }
         }
 
         if(this->mode != climate::CLIMATE_MODE_HEAT && this->target_temperature < 18) {
